@@ -32,6 +32,11 @@ provider adapters are staged behind the contracts above.
 The implementation map in [docs/IMPLEMENTATION_MAP.md](docs/IMPLEMENTATION_MAP.md)
 shows how the proven InfiniteVerse tooling maps into this independent project.
 
+The signed webhook receiver and coordinator loop are reference implementations;
+deploy them behind a private network boundary, with a secret manager and an
+external process supervisor. The public repository never contains provider
+credentials or product-specific deployment configuration.
+
 ## License
 
 Apache-2.0. See [LICENSE](LICENSE).
