@@ -109,6 +109,20 @@ make lint
 5. Add a local evidence viewer and decision replay command.
 6. Add additional providers without changing policy contracts.
 
+## Setup and context
+
+```bash
+./scripts/setup.sh
+python3 scripts/gen-context.py
+CURRENT_CORPUS=.llms/llms-full.txt VERSIONED_CORPUS=.llms/llms-full.txt \
+  MANIFEST_FILE=.llms/manifest.json scripts/context-check.sh
+```
+
+Setup asks which provider CLIs are needed, authenticates only selected
+providers, writes a private local config, generates the context manifest, and
+runs doctor. Context is generated from ACP sources; it is never copied from a
+product repository.
+
 The current provider modules are contract adapters with injected clients. They
 intentionally do not contain credentials, implicit retries, or provider-specific
 policy. Live clients and deployment wiring are the next integration boundary.
