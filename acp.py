@@ -82,6 +82,15 @@ def cmd_mode(args: argparse.Namespace) -> int:
     print(stable({"decision": "APPROVED" if mode.name in ("normal", "continuation", "degraded") else "BLOCKED", **as_dict(mode)}))
     return 0 if mode.name in ("normal", "continuation", "degraded") else 78
 
+def cmd_queue_add(args: argparse.Namespace) -> int:
+    from queue import enqueue
+    enqueue(args.database, issue=args.issue, project=args.project, repository=args.repository, reason=args.reason, corpus_version=args.corpus_version, reset_at=args.reset_at)
+    print(stable({"decision":"APPROVED","queued":args.issue,"database":args.database})); return 0
+
+def cmd_queue_due(args: argparse.Namespace) -> int:
+    from queue import due
+    print(stable({"decision":"APPROVED","items":due(args.database,args.now)})); return 0
+
 def main() -> int:
     parser = argparse.ArgumentParser(prog="acp"); sub = parser.add_subparsers(dest="command", required=True)
     p = sub.add_parser("admission"); p.add_argument("--packet", required=True); p.set_defaults(func=cmd_admission)
@@ -92,6 +101,8 @@ def main() -> int:
     p = sub.add_parser("init"); p.add_argument("directory", nargs="?", default="."); p.set_defaults(func=cmd_init)
     p = sub.add_parser("policy"); p.add_argument("--file", default=".acp/config.json"); p.set_defaults(func=cmd_policy)
     p = sub.add_parser("mode"); p.add_argument("--project-access", choices=("available", "rate_limited", "unauthorized", "not_found", "unavailable"), required=True); p.add_argument("--existing-lease", action="store_true"); p.add_argument("--lease-valid", action="store_true"); p.add_argument("--now", type=int); p.add_argument("--reset-at", type=int); p.set_defaults(func=cmd_mode)
+    p = sub.add_parser("queue-add"); p.add_argument("--database", default=".acp/evidence.sqlite3"); p.add_argument("--issue", required=True); p.add_argument("--project", required=True); p.add_argument("--repository", required=True); p.add_argument("--reason", required=True); p.add_argument("--corpus-version", required=True); p.add_argument("--reset-at", type=int); p.set_defaults(func=cmd_queue_add)
+    p = sub.add_parser("queue-due"); p.add_argument("--database", default=".acp/evidence.sqlite3"); p.add_argument("--now", type=int); p.set_defaults(func=cmd_queue_due)
     args = parser.parse_args()
     return args.func(args)
 
