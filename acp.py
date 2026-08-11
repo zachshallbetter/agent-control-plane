@@ -75,6 +75,13 @@ def cmd_policy(args: argparse.Namespace) -> int:
     try: print(stable({"decision":"APPROVED","policy":load(args.file)})); return 0
     except (OSError,ValueError,json.JSONDecodeError) as exc: return emit("INVALID",{},str(exc),1)
 
+def cmd_mode(args: argparse.Namespace) -> int:
+    from operating_mode import as_dict, evaluate
+    mode = evaluate(project_access=args.project_access, existing_lease=args.existing_lease,
+                    lease_valid=args.lease_valid, now=args.now, reset_at=args.reset_at)
+    print(stable({"decision": "APPROVED" if mode.name in ("normal", "continuation", "degraded") else "BLOCKED", **as_dict(mode)}))
+    return 0 if mode.name in ("normal", "continuation", "degraded") else 78
+
 def main() -> int:
     parser = argparse.ArgumentParser(prog="acp"); sub = parser.add_subparsers(dest="command", required=True)
     p = sub.add_parser("admission"); p.add_argument("--packet", required=True); p.set_defaults(func=cmd_admission)
@@ -84,6 +91,7 @@ def main() -> int:
     p = sub.add_parser("ledger"); p.add_argument("--database", default=".acp/evidence.sqlite3"); p.set_defaults(func=cmd_ledger)
     p = sub.add_parser("init"); p.add_argument("directory", nargs="?", default="."); p.set_defaults(func=cmd_init)
     p = sub.add_parser("policy"); p.add_argument("--file", default=".acp/config.json"); p.set_defaults(func=cmd_policy)
+    p = sub.add_parser("mode"); p.add_argument("--project-access", choices=("available", "rate_limited", "unauthorized", "not_found", "unavailable"), required=True); p.add_argument("--existing-lease", action="store_true"); p.add_argument("--lease-valid", action="store_true"); p.add_argument("--now", type=int); p.add_argument("--reset-at", type=int); p.set_defaults(func=cmd_mode)
     args = parser.parse_args()
     return args.func(args)
 

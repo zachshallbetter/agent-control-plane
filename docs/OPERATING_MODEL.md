@@ -27,5 +27,6 @@ Silence, a repeated “continue,” a green local test, or a browser session is 
 1. One issue, one claim, one worktree, one PR.
 2. Workers never select their own repository or scope.
 3. Findings outside scope become linked work.
-4. Provider failures stop the cycle; retry budgets are explicit.
+4. Provider failures stop authority-dependent work; retry budgets are explicit.
+5. Rate limits use degraded mode so agents can prepare and queue work without creating untracked implementation.
 5. Direct pushes to protected branches are unqualified.

@@ -34,6 +34,12 @@ versioned, fail-closed decisions.
 `BLOCKED` is productive: the agent resolves only the named condition and
 resubmits the same packet. Silence or a repeated “continue” is not approval.
 
+Provider outages use bounded degraded operation. Run `acp mode --project-access
+rate_limited` for a machine-readable mode: inspection, preparation, local checks,
+and queueing remain available, while claims, worktrees, implementation, merges,
+deployments, and Project mutations remain paused. Existing unexpired leases may
+use continuation mode. Recovery always requires a fresh provider read.
+
 GitHub is the first-class reference adapter. The reusable [GitHub adapter contract](docs/GITHUB_ADAPTER.md), [Projects skill](skills/github-projects/SKILL.md), and [coordinator agent definition](agents/coordinator.md) define how issues, Project items, dependencies, PRs, checks, and evidence become controlled delivery decisions.
 
 InfiniteVerse is the reference integration, not a dependency.
