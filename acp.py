@@ -64,6 +64,12 @@ def cmd_ledger(args: argparse.Namespace) -> int:
     db = connect(args.database); rows = db.execute("SELECT id,created_at,kind,payload FROM evidence ORDER BY created_at,id").fetchall(); db.close()
     print("\n".join(stable({"evidence_id": r[0], "created_at": r[1], "kind": r[2], "payload": json.loads(r[3])}) for r in rows)); return 0
 
+def cmd_init(args: argparse.Namespace) -> int:
+    root = Path(args.directory).resolve(); (root / ".acp").mkdir(parents=True, exist_ok=True)
+    config = root / ".acp" / "config.json"
+    if not config.exists(): config.write_text(stable({"policy_version": POLICY_VERSION, "providers": [], "snapshot_interval_seconds": 60}) + "\n")
+    print(stable({"decision":"APPROVED","initialized":str(root),"config":str(config)})); return 0
+
 def main() -> int:
     parser = argparse.ArgumentParser(prog="acp"); sub = parser.add_subparsers(dest="command", required=True)
     p = sub.add_parser("admission"); p.add_argument("--packet", required=True); p.set_defaults(func=cmd_admission)
@@ -71,6 +77,7 @@ def main() -> int:
     p = sub.add_parser("qualification"); p.add_argument("--scope-passed", action="store_true"); p.add_argument("--checks-passed", action="store_true"); p.add_argument("--human-acknowledged", action="store_true"); p.set_defaults(func=cmd_qualify)
     p = sub.add_parser("evidence"); p.add_argument("--database", default=".acp/evidence.sqlite3"); p.add_argument("--kind", required=True); p.add_argument("--file", required=True); p.set_defaults(func=cmd_evidence)
     p = sub.add_parser("ledger"); p.add_argument("--database", default=".acp/evidence.sqlite3"); p.set_defaults(func=cmd_ledger)
+    p = sub.add_parser("init"); p.add_argument("directory", nargs="?", default="."); p.set_defaults(func=cmd_init)
     args = parser.parse_args()
     return args.func(args)
 

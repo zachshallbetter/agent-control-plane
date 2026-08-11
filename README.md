@@ -91,6 +91,21 @@ make test
 make lint
 ```
 
+## Drop-in installation
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+pip install -e .
+acp --help
+acp init
+```
+
+ACP communicates through stable JSON decisions and does not require Claude,
+OpenAI, Google, a specific IDE, or a specific agent runtime. See
+[INTEROPERABILITY.md](docs/INTEROPERABILITY.md) and
+[AGENT_PROTOCOL.md](docs/AGENT_PROTOCOL.md).
+
 ## Security rules
 
 - Fail closed on unknown repositories, paths, dependencies, providers, and decisions.
