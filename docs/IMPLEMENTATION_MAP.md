@@ -24,6 +24,9 @@
 | worker lifecycle | `worker.py` |
 | authenticated bridge | `bridge.py` |
 | live GitHub CLI adapter | `providers/github_cli.py` |
+| delivery spool and retry states | `delivery.py` |
+| merge/status controller | `controller.py` |
+| bounded bridge cycle | `scripts/bridge-cycle.sh` |
 | version/corpus rules | `docs/VERSIONING.md` and adapter configuration |
 
 The map is intentionally a boundary document, not a copy of product-repository implementation.
