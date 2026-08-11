@@ -67,8 +67,13 @@ def cmd_ledger(args: argparse.Namespace) -> int:
 def cmd_init(args: argparse.Namespace) -> int:
     root = Path(args.directory).resolve(); (root / ".acp").mkdir(parents=True, exist_ok=True)
     config = root / ".acp" / "config.json"
-    if not config.exists(): config.write_text(stable({"policy_version": POLICY_VERSION, "providers": [], "snapshot_interval_seconds": 60}) + "\n")
+    if not config.exists(): config.write_text(stable({"policy_version": POLICY_VERSION, "statuses":{"ready":"Ready","review":"In review","done":"Done","verified":"Verified"},"retry":{"max_attempts":3,"base_seconds":2,"max_seconds":60},"providers":{"github":{"enabled":True},"railway":{"enabled":False},"vercel":{"enabled":False}},"snapshot_interval_seconds":60,"require_human_acknowledgement":True}) + "\n")
     print(stable({"decision":"APPROVED","initialized":str(root),"config":str(config)})); return 0
+
+def cmd_policy(args: argparse.Namespace) -> int:
+    from policy import load
+    try: print(stable({"decision":"APPROVED","policy":load(args.file)})); return 0
+    except (OSError,ValueError,json.JSONDecodeError) as exc: return emit("INVALID",{},str(exc),1)
 
 def main() -> int:
     parser = argparse.ArgumentParser(prog="acp"); sub = parser.add_subparsers(dest="command", required=True)
@@ -78,6 +83,7 @@ def main() -> int:
     p = sub.add_parser("evidence"); p.add_argument("--database", default=".acp/evidence.sqlite3"); p.add_argument("--kind", required=True); p.add_argument("--file", required=True); p.set_defaults(func=cmd_evidence)
     p = sub.add_parser("ledger"); p.add_argument("--database", default=".acp/evidence.sqlite3"); p.set_defaults(func=cmd_ledger)
     p = sub.add_parser("init"); p.add_argument("directory", nargs="?", default="."); p.set_defaults(func=cmd_init)
+    p = sub.add_parser("policy"); p.add_argument("--file", default=".acp/config.json"); p.set_defaults(func=cmd_policy)
     args = parser.parse_args()
     return args.func(args)
 

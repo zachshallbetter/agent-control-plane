@@ -106,6 +106,11 @@ OpenAI, Google, a specific IDE, or a specific agent runtime. See
 [INTEROPERABILITY.md](docs/INTEROPERABILITY.md) and
 [AGENT_PROTOCOL.md](docs/AGENT_PROTOCOL.md).
 
+Project behavior is customizable through `.acp/config.json`; use `acp policy`
+to validate it. Status labels, retry budgets, snapshot intervals, provider
+targets, and enabled adapters can vary by project while the safety contract
+remains fixed. See [CUSTOMIZATION.md](docs/CUSTOMIZATION.md).
+
 ## Security rules
 
 - Fail closed on unknown repositories, paths, dependencies, providers, and decisions.
