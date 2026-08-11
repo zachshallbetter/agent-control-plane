@@ -40,6 +40,9 @@ and queueing remain available, while claims, worktrees, implementation, merges,
 deployments, and Project mutations remain paused. Existing unexpired leases may
 use continuation mode. Recovery always requires a fresh provider read.
 
+Before Project operations, use `scripts/rate-limit.sh` to consult the bounded
+cached GitHub quota probe. ACP never loops on exhausted GraphQL capacity.
+
 GitHub is the first-class reference adapter. The reusable [GitHub adapter contract](docs/GITHUB_ADAPTER.md), [Projects skill](skills/github-projects/SKILL.md), and [coordinator agent definition](agents/coordinator.md) define how issues, Project items, dependencies, PRs, checks, and evidence become controlled delivery decisions.
 
 InfiniteVerse is the reference integration, not a dependency.

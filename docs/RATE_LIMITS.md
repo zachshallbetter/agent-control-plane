@@ -14,3 +14,10 @@ Use `acp queue-add` to persist a blocked candidate with its project, repository,
 blocker, corpus version, and reset time. `acp queue-due` returns candidates
 eligible for one recovery probe; it does not claim or mutate them. Queue records
 are idempotent by issue number.
+
+The canonical quota probe is `scripts/rate-limit.sh`. It caches quota metadata
+for 30 seconds by default, reports UTC and local reset times, and must run before
+any GraphQL-backed Project snapshot or mutation. Set `ACP_RATE_LIMIT_CACHE` and
+`ACP_RATE_LIMIT_MIN_INTERVAL` to customize the cache path and interval. Cached
+quota data prevents request storms but never authorizes work after a reset; a
+fresh Project read is still required.
