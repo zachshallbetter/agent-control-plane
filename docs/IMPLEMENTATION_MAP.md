@@ -17,6 +17,9 @@
 | context freshness | `scripts/context-check.sh` |
 | agent roles | `agents/` |
 | reusable skills | `skills/` |
+| retry policy | `retry.py` |
+| provider adapters | `providers/` |
+| repository map | `scripts/repository-map.sh` |
 | version/corpus rules | `docs/VERSIONING.md` and adapter configuration |
 
 The map is intentionally a boundary document, not a copy of product-repository implementation.

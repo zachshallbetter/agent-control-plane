@@ -108,3 +108,7 @@ make lint
 4. Add policy configuration and schema migration tooling.
 5. Add a local evidence viewer and decision replay command.
 6. Add additional providers without changing policy contracts.
+
+The current provider modules are contract adapters with injected clients. They
+intentionally do not contain credentials, implicit retries, or provider-specific
+policy. Live clients and deployment wiring are the next integration boundary.
