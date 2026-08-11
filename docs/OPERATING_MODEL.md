@@ -10,6 +10,10 @@ An issue packet is the authorization boundary. It must declare:
 - evidence requirements; and
 - definition of done.
 
+ACP admission is the reusable policy decision over that packet and supplied
+provider, topology, and corpus facts. Project integrations remain responsible
+for final local enforcement before claims, worktrees, merges, or mutations.
+
 ## Decisions
 
 | Decision | Meaning | Agent action |

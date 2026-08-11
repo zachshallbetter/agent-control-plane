@@ -27,9 +27,9 @@ def packet(path: str) -> dict:
 def cmd_admission(args: argparse.Namespace) -> int:
     try: data = packet(args.packet)
     except (OSError, json.JSONDecodeError, ValueError) as exc: return emit("INVALID", {}, str(exc), 1)
-    if data.get("status") != "Ready": return emit("BLOCKED", {"issue": data["issue"]}, "Project item is not Ready", 78)
-    if data.get("unresolved_dependencies"): return emit("BLOCKED", {"issue": data["issue"], "blockers": data["unresolved_dependencies"]}, "declared dependency is unresolved", 78)
-    return emit("APPROVED", {"issue": data["issue"], "project_item": data["project_item"], "repository": data["repository"]}, "issue packet is actionable")
+    from admission import decide
+    decision, reason, payload = decide(data, topology_ok=not args.topology_failed, corpus_fresh=not args.stale_corpus, provider_available=not args.provider_unavailable)
+    return emit(decision, payload, reason, 0 if decision == "APPROVED" else (1 if decision == "INVALID" else 78))
 
 def within(path: str, roots: list[str]) -> bool:
     return any(path == root or path.startswith(root.rstrip("/") + "/") for root in roots)
@@ -93,7 +93,7 @@ def cmd_queue_due(args: argparse.Namespace) -> int:
 
 def main() -> int:
     parser = argparse.ArgumentParser(prog="acp"); sub = parser.add_subparsers(dest="command", required=True)
-    p = sub.add_parser("admission"); p.add_argument("--packet", required=True); p.set_defaults(func=cmd_admission)
+    p = sub.add_parser("admission"); p.add_argument("--packet", required=True); p.add_argument("--topology-failed", action="store_true"); p.add_argument("--stale-corpus", action="store_true"); p.add_argument("--provider-unavailable", action="store_true"); p.set_defaults(func=cmd_admission)
     p = sub.add_parser("scope-audit"); p.add_argument("--packet", required=True); p.add_argument("--files", required=True); p.set_defaults(func=cmd_scope)
     p = sub.add_parser("qualification"); p.add_argument("--scope-passed", action="store_true"); p.add_argument("--checks-passed", action="store_true"); p.add_argument("--human-acknowledged", action="store_true"); p.set_defaults(func=cmd_qualify)
     p = sub.add_parser("evidence"); p.add_argument("--database", default=".acp/evidence.sqlite3"); p.add_argument("--kind", required=True); p.add_argument("--file", required=True); p.set_defaults(func=cmd_evidence)
