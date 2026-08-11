@@ -20,6 +20,10 @@
 | retry policy | `retry.py` |
 | provider adapters | `providers/` |
 | repository map | `scripts/repository-map.sh` |
+| durable claims and attempts | `ledger.py` |
+| worker lifecycle | `worker.py` |
+| authenticated bridge | `bridge.py` |
+| live GitHub CLI adapter | `providers/github_cli.py` |
 | version/corpus rules | `docs/VERSIONING.md` and adapter configuration |
 
 The map is intentionally a boundary document, not a copy of product-repository implementation.
