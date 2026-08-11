@@ -26,6 +26,13 @@ for final local enforcement before claims, worktrees, merges, or mutations.
 
 Silence, a repeated “continue,” a green local test, or a browser session is not approval. A human must read and acknowledge the final delivery record.
 
+For a single-maintainer project, the maintainer may satisfy the human review
+gate with a separately recorded second-pass review labeled `self-approved`.
+ACP must never represent that record as independent approval. The second pass
+must cover scope, exclusions, migrations, security boundaries, checks, and
+evidence. Projects with multiple qualified maintainers should require an
+independent approval instead.
+
 ## Invariants
 
 1. One issue, one claim, one worktree, one PR.

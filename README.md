@@ -152,9 +152,23 @@ providers, writes a private local config, generates the context manifest, and
 runs doctor. Context is generated from ACP sources; it is never copied from a
 product repository.
 
+GitHub setup is idempotent: it checks the authenticated `github.com` host for
+the `project` scope before starting a device flow, and performs one explicit
+`gh auth refresh --hostname github.com --scopes project` only when that scope is
+actually missing. Project population is dry-run by default; applying a manifest
+requires an available cached quota probe and spaces mutations with
+`ACP_GITHUB_MUTATION_INTERVAL` (or `--interval`) so a reconciliation cannot
+create a request storm.
+
 The current provider modules are contract adapters with injected clients. They
 intentionally do not contain credentials, implicit retries, or provider-specific
 policy. Live clients and deployment wiring are the next integration boundary.
+
+For hosted deployments, keep `ACP_GATEWAY_TOKEN` in the deployment secret store
+and inject it only into the local agent process when setup explicitly configures
+the gateway. Startup distinguishes gateway health, local credential presence,
+App-token probing, and fresh Project-context verification; a missing local token
+must never be misclassified as missing GitHub Project access.
 
 CLI-backed provider clients are now available for authenticated GitHub, Railway,
 and Vercel environments. They remain supervised: targets, credentials, timeouts,

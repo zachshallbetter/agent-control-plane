@@ -26,3 +26,9 @@ acp policy --file .acp/config.json
 ```
 
 Policy changes are versioned and should be reviewed like code. A project may add stricter rules but must not silently weaken human approval, scope, evidence, or provider-failure stop conditions.
+
+The default review policy supports a declared single-maintainer mode. In that
+mode, a second-pass human review is recorded as `self-approved`; it is distinct
+from `independent-approved` and must include the same scope, check, and evidence
+record. Enabling single-maintainer mode does not waive merge, deployment, or
+runtime evidence gates.
