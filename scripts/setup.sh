@@ -15,5 +15,6 @@ if [[ ! -f "$CONFIG" ]]; then
   echo "created $CONFIG"
 else echo "using $CONFIG"; fi
 python3 "$ROOT/scripts/gen-context.py"
+for tool in gh railway vercel; do command -v "$tool" >/dev/null 2>&1 && echo "capability: $tool available" || echo "capability: $tool unavailable"; done
 "$ROOT/scripts/doctor.sh"
 echo 'Setup complete. Run: ./acp.py admission --packet <packet.json>'

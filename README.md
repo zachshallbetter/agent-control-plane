@@ -141,3 +141,7 @@ product repository.
 The current provider modules are contract adapters with injected clients. They
 intentionally do not contain credentials, implicit retries, or provider-specific
 policy. Live clients and deployment wiring are the next integration boundary.
+
+CLI-backed provider clients are now available for authenticated GitHub, Railway,
+and Vercel environments. They remain supervised: targets, credentials, timeouts,
+and qualification evidence must be supplied explicitly.

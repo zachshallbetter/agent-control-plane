@@ -12,3 +12,8 @@ The production integration sequence is:
 8. `Controller` is the only component allowed to merge and set status.
 
 Failures become queued or terminal delivery states after the retry budget; they never become silent success.
+
+Live provider actions use `providers/cli.py` and `providers/github_mutations.py`.
+They require pre-authenticated CLIs, explicit repository/project/service values,
+bounded timeouts, and a prior `QUALIFIED` decision. ACP never creates a project,
+service, deployment, or merge from an inferred target.
