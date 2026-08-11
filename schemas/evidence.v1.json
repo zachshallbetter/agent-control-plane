@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zachshallbetter/agent-control-plane/schemas/evidence.v1.json",
+  "type": "object",
+  "required": ["kind", "subject", "observed_at", "result"],
+  "properties": {
+    "kind": {"type": "string"},
+    "subject": {"type": "string"},
+    "observed_at": {"type": "string"},
+    "result": {"type": "string"},
+    "references": {"type": "array", "items": {"type": "string"}},
+    "redactions": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}
