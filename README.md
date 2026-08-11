@@ -29,6 +29,9 @@ The repository contains the first portable decision primitives and reference
 shell CLI. The coordinator daemon, webhook receiver, persistent ledger, and
 provider adapters are staged behind the contracts above.
 
+The implementation map in [docs/IMPLEMENTATION_MAP.md](docs/IMPLEMENTATION_MAP.md)
+shows how the proven InfiniteVerse tooling maps into this independent project.
+
 ## License
 
 Apache-2.0. See [LICENSE](LICENSE).
