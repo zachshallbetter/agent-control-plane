@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Add existing issues or create issue items from a JSONL manifest. Dry-run by default.
+set -euo pipefail
+OWNER="" PROJECT="" MANIFEST="" APPLY=false
+while [[ $# -gt 0 ]]; do case "$1" in --owner) OWNER="$2"; shift 2;; --project) PROJECT="$2"; shift 2;; --manifest) MANIFEST="$2"; shift 2;; --apply) APPLY=true; shift;; *) echo "usage: $0 --owner ORG --project NUMBER --manifest FILE [--apply]" >&2; exit 2;; esac; done
+[[ -n "$OWNER" && -n "$PROJECT" && -r "$MANIFEST" ]] || { echo 'owner, project, and readable manifest are required' >&2; exit 2; }
+while IFS= read -r line; do [[ -n "$line" ]] || continue; url="$(printf '%s' "$line" | jq -r '.url // empty')"; title="$(printf '%s' "$line" | jq -r '.title // empty')"; [[ -n "$url" || -n "$title" ]] || { echo 'invalid manifest row' >&2; exit 1; }; if "$APPLY"; then if [[ -n "$url" ]]; then gh project item-add "$PROJECT" --owner "$OWNER" --url "$url" >/dev/null; else echo "draft creation requires issue provider: $title"; fi; else echo "would add: ${url:-$title}"; fi; done < "$MANIFEST"
+"$APPLY" || echo 'dry-run only; pass --apply to mutate GitHub'

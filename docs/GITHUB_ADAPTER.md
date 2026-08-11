@@ -23,3 +23,10 @@ GitHub is the first production adapter because it provides the issue, ProjectV2,
 - Use webhooks to invalidate or queue a refresh, not to trigger an unbounded API loop.
 - Never infer repository ownership from a title or prompt; resolve and verify the remote.
 - Provider rate limits and missing scopes produce `BLOCKED`, never retries or partial mutation.
+
+## Project bootstrap
+
+Project creation and population are explicit ACP operations. They default to
+dry-run, require `--apply` for mutation, and produce a manifest of the created
+Project, fields, linked repositories, populated issue URLs, and verification
+results. See `skills/github-projects/PROJECT_BOOTSTRAP.md`.
