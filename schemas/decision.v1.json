@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zachshallbetter/agent-control-plane/schemas/decision.v1.json",
+  "type": "object",
+  "required": ["decision", "decision_id", "issue", "policy_version", "reason"],
+  "properties": {
+    "decision": {"enum": ["INVALID", "BLOCKED", "APPROVED", "REJECTED", "QUALIFIED"]},
+    "decision_id": {"type": "string", "minLength": 1},
+    "issue": {"type": ["integer", "string"]},
+    "project_item": {"type": "string"},
+    "repository": {"type": "string"},
+    "policy_version": {"type": "string"},
+    "corpus_version": {"type": "string"},
+    "reason": {"type": "string", "minLength": 1},
+    "blockers": {"type": "array", "items": {"type": "object"}},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zachshallbetter/agent-control-plane/schemas/issue-packet.v1.json",
+  "type": "object",
+  "required": ["issue", "project_item", "repository", "authorized_paths", "exclusions", "dependencies", "acceptance_criteria", "evidence_requirements", "definition_of_done"],
+  "properties": {
+    "issue": {"type": ["integer", "string"]},
+    "project_item": {"type": "string"},
+    "repository": {"type": "string"},
+    "status": {"enum": ["Backlog", "Ready", "In progress", "In review", "Done", "Verified"]},
+    "authorized_paths": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "exclusions": {"type": "array", "items": {"type": "string"}},
+    "dependencies": {"type": "array", "items": {"type": "string"}},
+    "acceptance_criteria": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "evidence_requirements": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "definition_of_done": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+  },
+  "additionalProperties": false
+}
