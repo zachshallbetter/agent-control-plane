@@ -10,6 +10,8 @@ issue packet → classification → claim/worktree → implementation → eviden
 
 Provider checks are target-aware and bounded. They never probe unrelated Projects, retry failed access, or mutate state after a provider failure. See [docs/RATE_LIMITS.md](docs/RATE_LIMITS.md).
 
+GitHub is the first-class reference adapter. The reusable [GitHub adapter contract](docs/GITHUB_ADAPTER.md), [Projects skill](skills/github-projects/SKILL.md), and [coordinator agent definition](agents/coordinator.md) define how issues, Project items, dependencies, PRs, checks, and evidence become controlled delivery decisions.
+
 InfiniteVerse is the reference integration, not a dependency.
 
 ## Repository map
