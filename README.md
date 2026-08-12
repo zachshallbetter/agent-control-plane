@@ -1,5 +1,17 @@
 # Agent Control Plane
 
+## Hosted Project authority
+
+The Railway gateway's authenticated `/internal/project-context` endpoint is
+the hosted read authority for GitHub Projects. It mints a GitHub App
+installation token server-side, caches bounded Project snapshots, and returns
+Project fields plus item field values without exposing GitHub credentials to a
+developer or agent. Client skills should set `ACP_GATEWAY_URL` and
+`ACP_GATEWAY_TOKEN`; when configured, they must not fall back to local `gh
+project` or GraphQL calls. Mutations remain explicitly unavailable until an
+allowlisted gateway operation is implemented; clients must fail closed rather
+than bypassing ACP.
+
 Provider-neutral admission, evidence, and qualification controls for autonomous software delivery.
 
 ACP is the governance layer between a delivery request and an autonomous
