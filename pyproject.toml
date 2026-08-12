@@ -12,3 +12,23 @@ license = {file = "LICENSE"}
 
 [project.scripts]
 acp = "acp:main"
+
+[tool.setuptools]
+py-modules = [
+  "acp",
+  "admission",
+  "bridge",
+  "controller",
+  "coordinator",
+  "delivery",
+  "ledger",
+  "operating_mode",
+  "policy",
+  "project_gateway",
+  "queue",
+  "retry",
+  "webhook_receiver",
+  "worker",
+  "worker_exec",
+]
+packages = ["adapters", "providers"]
