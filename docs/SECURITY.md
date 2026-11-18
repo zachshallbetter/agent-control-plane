@@ -8,4 +8,4 @@
 - Treat worker output as untrusted input; validate structured verdicts before mutation.
 - Human acknowledgement is required for merge and status promotion.
 
-Report vulnerabilities privately through GitHub Security Advisories; do not publish credentials or exploit details in issues.
+Report vulnerabilities privately through GitHub private vulnerability reporting, as described in [`SECURITY.md`](../SECURITY.md); do not publish credentials or exploit details in issues.
