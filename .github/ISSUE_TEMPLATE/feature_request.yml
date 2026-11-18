@@ -1,0 +1,25 @@
+name: Feature request
+description: Propose a new capability, adapter or policy change.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: >
+        ACP keeps the policy engine provider-neutral: providers supply facts through adapters and do
+        not define decisions. New adapters need contract fixtures and rate-limit behavior tests.
+  - type: textarea
+    id: problem
+    attributes:
+      label: The behavior you want
+      description: What should ACP decide or do? What is the use case?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: How you imagine it
+      description: A policy rule, an adapter, a schema field, a CLI command.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

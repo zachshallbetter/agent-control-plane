@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you reference this software, please cite it as below."
+title: "Agent Control Plane"
+abstract: >-
+  Provider-neutral admission, evidence, and qualification controls for
+  autonomous software delivery.
+type: software
+authors:
+  - family-names: Shallbetter
+    given-names: Zach
+version: "0.1.0"
+license: Apache-2.0
+repository-code: "https://github.com/zachshallbetter/agent-control-plane"
+url: "https://github.com/zachshallbetter/agent-control-plane"

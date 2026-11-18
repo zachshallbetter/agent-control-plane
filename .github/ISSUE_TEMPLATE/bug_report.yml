@@ -1,0 +1,57 @@
+name: Bug report
+description: ACP is not behaving as documented.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for the report. A minimal reproduction is the fastest path to a fix. Do not include credentials, tokens or raw prompts.
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: agent-control-plane 0.1.0 (or a commit hash)
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - CLI (acp)
+        - Admission and policy
+        - Evidence ledger
+        - Coordinator, queue or worker
+        - Webhook receiver
+        - Gateway (deployments/gateway)
+        - Provider adapter
+        - Skills, agents or schemas
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+      description: What should have happened. Quote the doc section if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened instead
+      description: Include the ACP decision JSON if there is one.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: The commands you ran, for example `acp ...` or `make test`, and their output.
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: OS, Python version (3.11 or later), provider (GitHub, Railway, Vercel)
